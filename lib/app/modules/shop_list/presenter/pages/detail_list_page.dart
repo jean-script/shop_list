@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:shop_list/app/extensions/double_extension.dart';
 import 'package:shop_list/app/modules/product/domain/entities/product_shop_entity.dart';
 import 'package:shop_list/app/modules/product/presenter/controllers/product_controller.dart';
+import 'package:shop_list/app/modules/product/presenter/widgets/bottom_sheet_delete_list.dart';
+import 'package:shop_list/app/modules/product/presenter/widgets/bottom_sheet_delete_product.dart';
 import 'package:shop_list/app/modules/product/presenter/widgets/bottom_sheet_product.dart';
 import 'package:shop_list/app/modules/shop_list/presenter/controllers/shop_list_controller.dart';
+import 'package:shop_list/app/modules/shop_list/presenter/widgets/search_field_widget.dart';
 
 class DetailListPage extends StatefulWidget {
   const DetailListPage({super.key});
@@ -30,131 +33,135 @@ class _DetailListPageState extends State<DetailListPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: Obx(
-        () => Container(
-          height: 90,
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          decoration: BoxDecoration(
-            color: Colors.blue,
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.1),
-                blurRadius: 10,
-                offset: const Offset(0, -2),
+    return SafeArea(
+      child: Scaffold(
+        bottomNavigationBar: Obx(
+          () => Container(
+            height: 90,
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            decoration: BoxDecoration(
+              color: Colors.blue,
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(16),
               ),
-            ],
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              /// 🛒 INFO
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Total da compra ( ${ProductController.to.products.length} itens )',
-                    style: TextStyle(color: Colors.white70, fontSize: 13),
-                  ),
-                  Text(
-                    ProductController.to.totalCompra,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-
-              /// 📦 INFO CARRINHO
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  // Text(
-                  //   '${ProductController.to.productIsCheck.length} de ${ProductController.to.products.length} itens',
-                  //   style: TextStyle(color: Colors.white70, fontSize: 12),
-                  // ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 6,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.15),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Row(
-                      children: [
-                        const Icon(Icons.shopping_cart, color: Colors.white),
-                        const SizedBox(width: 6),
-                        Text(
-                          ProductController.to.totalCart,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-      floatingActionButton: SizedBox(
-        height: 60,
-        child: ElevatedButton.icon(
-          onPressed: () {
-            Get.bottomSheet(BottomSheetProduct());
-          },
-          style: ButtonStyle(
-            backgroundColor: WidgetStatePropertyAll(Colors.blue),
-          ),
-          icon: Icon(Icons.add, color: Colors.white),
-          label: Text(
-            'Novo item',
-            style: TextStyle(color: Colors.white, fontSize: 16),
-          ),
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      appBar: PreferredSize(
-        preferredSize: Size(double.infinity, 80),
-        child: AppBar(
-          iconTheme: IconThemeData(color: Colors.white),
-          actions: [
-            IconButton(
-              onPressed: () => ShopListController.to.delete(
-                ShopListController.to.selectedShopList,
-              ),
-              icon: Icon(Icons.delete, color: Colors.redAccent),
-            ),
-          ],
-          title: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                ShopListController.to.selectedShopList.name,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withAlpha(10),
+                  blurRadius: 10,
+                  offset: const Offset(0, -2),
                 ),
+              ],
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                /// 🛒 INFO
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Total da compra ( ${ProductController.to.products.length} itens )',
+                      style: TextStyle(color: Colors.white70, fontSize: 13),
+                    ),
+                    Text(
+                      ProductController.to.totalCompra,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+
+                /// 📦 INFO CARRINHO
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    // Text(
+                    //   '${ProductController.to.productIsCheck.length} de ${ProductController.to.products.length} itens',
+                    //   style: TextStyle(color: Colors.white70, fontSize: 12),
+                    // ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 6,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.15),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Row(
+                        children: [
+                          const Icon(Icons.shopping_cart, color: Colors.white),
+                          const SizedBox(width: 6),
+                          Text(
+                            ProductController.to.totalCart,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+        floatingActionButton: SizedBox(
+          height: 60,
+          child: ElevatedButton.icon(
+            onPressed: () {
+              Get.bottomSheet(BottomSheetProduct()).whenComplete(() {
+                ProductController.to.cleanForm();
+              });
+            },
+            style: ButtonStyle(
+              backgroundColor: WidgetStatePropertyAll(Colors.blue),
+            ),
+            icon: Icon(Icons.add, color: Colors.white),
+            label: Text(
+              'Novo item',
+              style: TextStyle(color: Colors.white, fontSize: 16),
+            ),
+          ),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        appBar: PreferredSize(
+          preferredSize: Size(double.infinity, 80),
+          child: AppBar(
+            iconTheme: IconThemeData(color: Colors.white),
+            actions: [
+              IconButton(
+                onPressed: () => Get.bottomSheet(BottomSheetDeleteList()),
+                icon: Icon(Icons.delete, color: Colors.redAccent),
               ),
             ],
+            title: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  ShopListController.to.selectedShopList.name,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
+            ),
+            backgroundColor: Colors.blue,
           ),
-          backgroundColor: Colors.blue,
         ),
-      ),
-      extendBodyBehindAppBar: true,
-      body: SafeArea(
-        child: ListDetail(),
-        // child: Padding(padding: const EdgeInsets.all(8.0), child: ListDetail()),
+        extendBodyBehindAppBar: true,
+        body: SafeArea(
+          child: ListDetail(),
+          // child: Padding(padding: const EdgeInsets.all(8.0), child: ListDetail()),
+        ),
       ),
     );
   }
@@ -165,30 +172,13 @@ class SectionHeader {
   SectionHeader(this.title);
 }
 
+class CategoryHeader {
+  final String title;
+  CategoryHeader(this.title);
+}
+
 class ListDetail extends GetView<ProductController> {
   const ListDetail({super.key});
-
-  List<dynamic> buildList() {
-    final list = <dynamic>[];
-
-    list.add(
-      SectionHeader(
-        'Produtos pendentes (${ProductController.to.productNotCheck.length})',
-      ),
-    );
-    list.addAll(controller.productNotCheck);
-
-    if (controller.productIsCheck.isNotEmpty) {
-      list.add(
-        SectionHeader(
-          'Produtos no carrinho (${ProductController.to.productIsCheck.length})',
-        ),
-      );
-      list.addAll(controller.productIsCheck);
-    }
-
-    return list;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -196,27 +186,119 @@ class ListDetail extends GetView<ProductController> {
       children: [
         Obx(
           () => LinearProgressIndicator(
-            value: ProductController.to.products.isEmpty
+            value: controller.products.isEmpty
                 ? 0
-                : ProductController.to.productIsCheck.length /
-                      ProductController.to.products.length,
+                : controller.productIsCheck.length / controller.products.length,
             backgroundColor: Colors.white24,
             valueColor: AlwaysStoppedAnimation(Colors.lightBlueAccent),
           ),
         ),
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: controller.obx(
-              (_) {
-                final items = buildList();
 
-                return ListView.separated(
-                  padding: const EdgeInsets.only(top: 10),
-                  itemCount: items.length,
-                  separatorBuilder: (_, __) => const SizedBox(height: 12),
+        SearchFieldWidget(),
+        Obx(() {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 8),
+              SizedBox(
+                height: 45,
+                child: ListView.separated(
+                  scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  itemCount: controller.categorys.length + 1,
+                  separatorBuilder: (_, __) => const SizedBox(width: 8),
+                  itemBuilder: (_, index) {
+                    /// 🔥 TODOS
+                    if (index == 0) {
+                      // final isSelected =
+                      //     controller.selectedCategoryIdFilter.value == 'all';
+
+                      return Obx(
+                        () => GestureDetector(
+                          onTap: () =>
+                              controller.selectedCategoryIdFilter.value = 'all',
+                          child: AnimatedContainer(
+                            duration: const Duration(milliseconds: 200),
+                            padding: const EdgeInsets.symmetric(horizontal: 14),
+                            decoration: BoxDecoration(
+                              color:
+                                  controller.selectedCategoryIdFilter.value ==
+                                      'all'
+                                  ? Colors.blue
+                                  : Colors.grey.shade200,
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            alignment: Alignment.center,
+                            child: Text(
+                              'Todos',
+                              style: TextStyle(
+                                color:
+                                    controller.selectedCategoryIdFilter.value ==
+                                        'all'
+                                    ? Colors.white
+                                    : Colors.black87,
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    }
+
+                    final category = controller.categorys[index - 1];
+                    // final isSelected =
+                    // controller.selectedCategoryIdFilter.value ==
+                    // category.id;
+
+                    return Obx(() {
+                      final isSelected =
+                          controller.selectedCategoryIdFilter.value ==
+                          category.id;
+
+                      return GestureDetector(
+                        onTap: () {
+                          controller.selectedCategoryIdFilter.value =
+                              category.id;
+                        },
+                        child: AnimatedContainer(
+                          duration: const Duration(milliseconds: 200),
+                          padding: const EdgeInsets.symmetric(horizontal: 14),
+                          decoration: BoxDecoration(
+                            color: isSelected
+                                ? Color(category.color)
+                                : Colors.grey.shade200,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          alignment: Alignment.center,
+                          child: Text(
+                            category.name,
+                            style: TextStyle(
+                              color: isSelected ? Colors.white : Colors.black87,
+                            ),
+                          ),
+                        ),
+                      );
+                    });
+                  },
+                ),
+              ),
+            ],
+          );
+        }),
+        controller.obx(
+          (_) {
+            return Obx(
+              () => Expanded(
+                child: ListView.separated(
+                  padding: const EdgeInsets.only(
+                    top: 10,
+                    left: 10,
+                    right: 10,
+                    bottom: 30,
+                  ),
+                  itemCount: controller.buildList().length,
+                  separatorBuilder: (_, _) => const SizedBox(height: 12),
                   itemBuilder: (context, index) {
-                    final item = items[index];
+                    final item = controller.buildList()[index];
 
                     /// 🔥 HEADER
                     if (item is SectionHeader) {
@@ -227,6 +309,20 @@ class ListDetail extends GetView<ProductController> {
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.grey.shade600,
+                          ),
+                        ),
+                      );
+                    }
+
+                    if (item is CategoryHeader) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: Text(
+                          item.title,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 14,
+                            color: Colors.blueGrey,
                           ),
                         ),
                       );
@@ -267,8 +363,11 @@ class ListDetail extends GetView<ProductController> {
 
                           /// 👉 deletar
                           if (direction == DismissDirection.endToStart) {
-                            controller.delete(product);
-                            return true;
+                            Get.bottomSheet(
+                              BottomSheetDeleteProduct(product: product),
+                            );
+                            // controller.delete(product);
+                            return false;
                           }
 
                           return false;
@@ -278,26 +377,26 @@ class ListDetail extends GetView<ProductController> {
                       ),
                     );
                   },
-                );
-              },
-
-              /// LOADING
-              onLoading: const Center(child: CircularProgressIndicator()),
-
-              /// EMPTY
-              onEmpty: Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.shopping_cart, size: 100),
-                    const SizedBox(height: 8),
-                    Text(
-                      'Você ainda não tem itens na lista',
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                  ],
                 ),
               ),
+            );
+          },
+
+          /// LOADING
+          onLoading: const Center(child: CircularProgressIndicator()),
+
+          /// EMPTY
+          onEmpty: Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.shopping_cart, size: 100),
+                const SizedBox(height: 8),
+                Text(
+                  'Você ainda não tem itens na lista',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+              ],
             ),
           ),
         ),
@@ -309,7 +408,9 @@ class ListDetail extends GetView<ProductController> {
     return InkWell(
       key: ValueKey(product.id),
       onTap: () {
-        Get.bottomSheet(BottomSheetProduct(product: product));
+        Get.bottomSheet(BottomSheetProduct(product: product)).whenComplete(() {
+          ProductController.to.cleanForm();
+        });
       },
       borderRadius: BorderRadius.circular(10),
       child: AnimatedOpacity(
@@ -327,30 +428,44 @@ class ListDetail extends GetView<ProductController> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              /// INFO
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              Row(
+                spacing: 12.0,
                 children: [
-                  Text(
-                    product.name,
-                    style: TextStyle(
-                      color: Colors.black87,
-                      fontWeight: FontWeight.w700,
-                      decoration: product.isChecked
-                          ? TextDecoration.lineThrough
-                          : null,
-                    ),
-                  ),
-                  Row(
+                  if (product.isChecked)
+                    Icon(Icons.check_box_outlined, color: Colors.green),
+
+                  /// INFO
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      if (product.total > 0.0)
-                        Text(
-                          '${product.total.currency} - ',
-                          style: TextStyle(color: Colors.blueGrey.shade800),
-                        ),
                       Text(
-                        '${product.amount} ${product.amount > 1 ? 'itens' : 'item'}',
-                        style: TextStyle(color: Colors.blueGrey.shade800),
+                        product.name,
+                        style: TextStyle(
+                          color: Colors.black87,
+                          fontWeight: FontWeight.w700,
+                          decoration: product.isChecked
+                              ? TextDecoration.lineThrough
+                              : null,
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          if (product.total > 0.0)
+                            Text(
+                              '${product.total.currency} • ',
+                              style: TextStyle(
+                                color: Colors.blueGrey.shade800,
+                                fontSize: 14,
+                              ),
+                            ),
+                          Text(
+                            '${product.amount} ${product.amount > 1 ? 'itens' : 'item'}',
+                            style: TextStyle(
+                              color: Colors.blueGrey.shade800,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -360,23 +475,25 @@ class ListDetail extends GetView<ProductController> {
               /// AÇÕES
               Row(
                 children: [
-                  SizedBox(
-                    height: 50,
-                    width: 50,
-                    child: Checkbox(
-                      value: product.isChecked,
-                      activeColor: Colors.blue,
-                      side: BorderSide(color: Colors.grey.shade600, width: 2.0),
-                      onChanged: (value) {
-                        if (value == null) return;
+                  // SizedBox(
+                  //   height: 50,
+                  //   width: 50,
+                  //   child: Checkbox(
+                  //     value: product.isChecked,
+                  //     activeColor: Colors.blue,
+                  //     side: BorderSide(color: Colors.grey.shade600, width: 2.0),
+                  //     onChanged: (value) {
+                  //       if (value == null) return;
 
-                        controller.edit(product.copyWith(isChecked: value));
-                      },
-                    ),
-                  ),
+                  //       controller.edit(product.copyWith(isChecked: value));
+                  //     },
+                  //   ),
+                  // ),
                   IconButton(
                     onPressed: () {
-                      controller.delete(product);
+                      Get.bottomSheet(
+                        BottomSheetDeleteProduct(product: product),
+                      );
                     },
                     icon: Icon(
                       Icons.delete_outline,

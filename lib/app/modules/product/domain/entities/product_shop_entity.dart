@@ -1,4 +1,5 @@
 import 'package:hive/hive.dart';
+import 'package:shop_list/app/modules/product/domain/entities/category_entity.dart';
 
 part 'product_shop_entity.g.dart';
 
@@ -22,12 +23,16 @@ class ProductShopDTO extends HiveObject {
   @HiveField(5)
   final bool isChecked;
 
+  @HiveField(6)
+  final String? categoryId;
+
   ProductShopDTO({
     required this.id,
     required this.listId,
     required this.name,
     required this.amount,
     required this.price,
+    required this.categoryId,
     this.isChecked = false,
   });
 
@@ -62,6 +67,7 @@ class ProductShopDTO extends HiveObject {
     int? amount,
     double? price,
     bool? isChecked,
+    String? categoryId,
   }) {
     return ProductShopDTO(
       id: id ?? this.id,
@@ -70,6 +76,7 @@ class ProductShopDTO extends HiveObject {
       amount: amount ?? this.amount,
       price: price ?? this.price,
       isChecked: isChecked ?? this.isChecked,
+      categoryId: categoryId ?? this.categoryId,
     );
   }
 
@@ -81,4 +88,24 @@ class ProductShopDTO extends HiveObject {
   //   'price': price,
   //   'isChecked': isChecked,
   // };
+}
+
+Future<void> migrateProducts() async {
+  final box = Hive.box<ProductShopDTO>('ProductList');
+  final boxCategory = Hive.box<Category>('categories');
+
+  final defaultCategoryId = boxCategory.containsKey('outros')
+      ? 'outros'
+      : boxCategory.values.first.id;
+
+  for (var key in box.keys) {
+    final product = box.get(key);
+
+    if (product == null) continue;
+
+    if (product.categoryId == null) {
+      final updated = product.copyWith(categoryId: defaultCategoryId);
+      await box.put(key, updated);
+    }
+  }
 }

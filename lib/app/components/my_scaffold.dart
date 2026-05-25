@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shop_list/app/modules/shop_list/presenter/widgets/bottom_sheet_form.dart';
-import 'package:shop_list/app/theme/theme_controller.dart';
 
 class MyScaffold extends StatelessWidget {
   const MyScaffold({super.key, required this.child});
@@ -20,14 +19,24 @@ class MyScaffold extends StatelessWidget {
             fontWeight: FontWeight.w600,
           ),
           title: Column(
+            // spacing: 4.0,
             crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('Shopping List'),
+              SizedBox(height: 8),
+              Text(
+                'Shopping List',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
               Text(
                 'Organize, economize e compre melhor',
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 12,
+                  fontSize: 14,
                   fontWeight: FontWeight.w600,
                 ),
               ),

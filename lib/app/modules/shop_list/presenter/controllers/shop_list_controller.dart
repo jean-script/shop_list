@@ -83,7 +83,7 @@ class ShopListController extends GetxController
         log('DEU ERRO NA CRIAÇÂO');
       },
       (shop) {
-        Get.back();
+        // Get.back();
         nameController.clear();
         shopList.add(shop);
         change(shopList, status: RxStatus.success());
@@ -100,9 +100,9 @@ class ShopListController extends GetxController
         log('ERROR AO EDITAR ITEM');
       },
       (sucess) {
-        if (Get.isBottomSheetOpen ?? false) {
-          Get.back();
-        }
+        // if (Get.isBottomSheetOpen ?? false) {
+        //   Get.back();
+        // }
 
         log('Editado com sucesso!');
 
@@ -119,7 +119,7 @@ class ShopListController extends GetxController
     return await _editShopListUsecase(dto);
   }
 
-  void delete(ShopListDTO dto) async {
+  Future<void> delete(ShopListDTO dto) async {
     final result = await Get.showOverlay(
       asyncFunction: () => _deleteShopListUsecase(dto),
       loadingWidget: Column(
@@ -129,7 +129,7 @@ class ShopListController extends GetxController
     );
 
     result.fold((fail) {}, (_) {
-      Get.back();
+      // Get.back();
       shopList.remove(dto);
       if (shopList.isEmpty) {
         change(shopList, status: RxStatus.empty());
