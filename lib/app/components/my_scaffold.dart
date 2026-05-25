@@ -13,11 +13,7 @@ class MyScaffold extends StatelessWidget {
       appBar: PreferredSize(
         preferredSize: Size(double.infinity, 80),
         child: AppBar(
-          titleTextStyle: TextStyle(
-            color: Colors.white,
-            fontSize: 20,
-            fontWeight: FontWeight.w600,
-          ),
+          titleTextStyle: Theme.of(context).textTheme.titleMedium,
           title: Column(
             // spacing: 4.0,
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -26,23 +22,15 @@ class MyScaffold extends StatelessWidget {
               SizedBox(height: 8),
               Text(
                 'Shopping List',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                  fontWeight: FontWeight.w600,
-                ),
+                style: Theme.of(context).textTheme.titleLarge,
               ),
               Text(
                 'Organize, economize e compre melhor',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                ),
+                style: Theme.of(context).textTheme.labelMedium,
               ),
             ],
           ),
-          backgroundColor: Colors.blue,
+          backgroundColor: Theme.of(context).colorScheme.primary,
           actions: [
             // IconButton(
             //   onPressed: () {
@@ -65,12 +53,14 @@ class MyScaffold extends StatelessWidget {
             Get.bottomSheet(BottomSheetForm());
           },
           style: ButtonStyle(
-            backgroundColor: WidgetStatePropertyAll(Colors.blue),
+            backgroundColor: WidgetStatePropertyAll(
+              Theme.of(context).colorScheme.primary,
+            ),
           ),
-          icon: Icon(Icons.add, color: Colors.white),
+          icon: Icon(Icons.add, color: Theme.of(context).iconTheme.color),
           label: Text(
             'Nova Lista',
-            style: TextStyle(color: Colors.white, fontSize: 16),
+            style: Theme.of(context).textTheme.labelMedium,
           ),
         ),
       ),

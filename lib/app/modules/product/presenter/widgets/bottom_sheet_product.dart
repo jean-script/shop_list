@@ -5,6 +5,7 @@ import 'package:shop_list/app/modules/product/presenter/controllers/product_cont
 
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:shop_list/app/theme/my_theme.dart';
 
 class BottomSheetProduct extends StatefulWidget {
   const BottomSheetProduct({super.key, this.product});
@@ -77,6 +78,7 @@ class _BottomSheetProductState extends State<BottomSheetProduct> {
                       isEdit ? ' Editar Item' : 'Registrar Item',
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.w600,
+                        color: MyTheme.title,
                       ),
                     ),
                   ),
@@ -295,11 +297,10 @@ class _BottomSheetProductState extends State<BottomSheetProduct> {
                                 children: [
                                   Text(
                                     'Adicionar'.tr,
-                                    style: const TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w600,
-                                    ),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelLarge
+                                        ?.copyWith(fontWeight: FontWeight.w600),
                                   ),
                                 ],
                               ),
@@ -379,7 +380,12 @@ class MyTextFormField extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.only(left: 5.0),
-          child: Text(title, style: Theme.of(context).textTheme.titleMedium),
+          child: Text(
+            title,
+            style: Theme.of(
+              context,
+            ).textTheme.titleMedium?.copyWith(color: MyTheme.title),
+          ),
         ),
         TextFormField(
           // autofocus: true,

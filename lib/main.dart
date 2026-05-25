@@ -5,6 +5,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:intl/intl.dart';
+import 'package:shop_list/app/Utils/app_logger.dart';
 import 'package:shop_list/app/modules/history/domain/entities/purchase_history_entity.dart';
 import 'package:shop_list/app/modules/product/domain/entities/category_entity.dart'
     as cat;
@@ -16,6 +18,14 @@ import 'package:shop_list/app/theme/theme_controller.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  PlatformDispatcher.instance.onError = (error, stack) {
+    AppLogger.error(error, stack);
+    return true;
+  };
+
+  Intl.defaultLocale = 'pt_BR';
+
   await Hive.initFlutter();
 
   await Hive.openBox<dynamic>('settings');

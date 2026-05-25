@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:get/get.dart';
+import 'package:shop_list/app/Utils/app_logger.dart';
 import 'package:shop_list/app/modules/product/domain/entities/product_shop_entity.dart';
 import 'package:shop_list/app/modules/shop_list/domain/entities/shop_list_entity.dart';
 import 'package:shop_list/app/modules/shop_list/domain/usecases/create_shop_list_usecase.dart';
@@ -42,21 +43,27 @@ class ShopListController extends GetxController
     super.onReady();
   }
 
+  @override
+  void onClose() {
+    nameController.dispose();
+    super.onClose();
+  }
+
   void getShopList() async {
-    log('getShopList -> iniciando');
+    AppLogger.log('getShopList -> iniciando');
     change(null, status: RxStatus.loading());
     final result = await _getShopListUsecase();
 
     result.fold(
       (fail) {
-        log('getShopList -> sem lista');
+        AppLogger.log('getShopList -> sem lista');
         change(null, status: RxStatus.empty());
       },
       (newShopList) async {
         shopList = newShopList;
         await Future.delayed(Duration(seconds: 1));
 
-        log('getShopList -> sucesso');
+        AppLogger.log('getShopList -> sucesso');
 
         if (shopList.isEmpty) {
           change(shopList, status: RxStatus.empty());
@@ -80,7 +87,7 @@ class ShopListController extends GetxController
 
     result.fold(
       (fail) {
-        log('DEU ERRO NA CRIAÇÂO');
+        AppLogger.log('DEU ERRO NA CRIAÇÂO');
       },
       (shop) {
         // Get.back();
@@ -97,14 +104,14 @@ class ShopListController extends GetxController
 
     result.fold(
       (fail) {
-        log('ERROR AO EDITAR ITEM');
+        AppLogger.log('ERROR AO EDITAR ITEM');
       },
       (sucess) {
         // if (Get.isBottomSheetOpen ?? false) {
         //   Get.back();
         // }
 
-        log('Editado com sucesso!');
+        AppLogger.log('Editado com sucesso!');
 
         var index = shopList.indexWhere((i) => i.id == dto.id);
         shopList.removeAt(index);
@@ -136,7 +143,7 @@ class ShopListController extends GetxController
       } else {
         change(shopList, status: RxStatus.success());
       }
-      log('lista deletada com sucesso');
+      AppLogger.log('lista deletada com sucesso');
     });
   }
 

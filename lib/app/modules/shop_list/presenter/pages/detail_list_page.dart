@@ -8,6 +8,7 @@ import 'package:shop_list/app/modules/product/presenter/widgets/bottom_sheet_del
 import 'package:shop_list/app/modules/product/presenter/widgets/bottom_sheet_product.dart';
 import 'package:shop_list/app/modules/shop_list/presenter/controllers/shop_list_controller.dart';
 import 'package:shop_list/app/modules/shop_list/presenter/widgets/search_field_widget.dart';
+import 'package:shop_list/app/theme/my_theme.dart';
 
 class DetailListPage extends StatefulWidget {
   const DetailListPage({super.key});
@@ -33,135 +34,127 @@ class _DetailListPageState extends State<DetailListPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        bottomNavigationBar: Obx(
-          () => Container(
-            height: 90,
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            decoration: BoxDecoration(
-              color: Colors.blue,
-              borderRadius: const BorderRadius.vertical(
-                top: Radius.circular(16),
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withAlpha(10),
-                  blurRadius: 10,
-                  offset: const Offset(0, -2),
-                ),
-              ],
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                /// 🛒 INFO
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Total da compra ( ${ProductController.to.products.length} itens )',
-                      style: TextStyle(color: Colors.white70, fontSize: 13),
-                    ),
-                    Text(
-                      ProductController.to.totalCompra,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-
-                /// 📦 INFO CARRINHO
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    // Text(
-                    //   '${ProductController.to.productIsCheck.length} de ${ProductController.to.products.length} itens',
-                    //   style: TextStyle(color: Colors.white70, fontSize: 12),
-                    // ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 6,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.15),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Row(
-                        children: [
-                          const Icon(Icons.shopping_cart, color: Colors.white),
-                          const SizedBox(width: 6),
-                          Text(
-                            ProductController.to.totalCart,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
-        floatingActionButton: SizedBox(
-          height: 60,
-          child: ElevatedButton.icon(
-            onPressed: () {
-              Get.bottomSheet(BottomSheetProduct()).whenComplete(() {
-                ProductController.to.cleanForm();
-              });
-            },
-            style: ButtonStyle(
-              backgroundColor: WidgetStatePropertyAll(Colors.blue),
-            ),
-            icon: Icon(Icons.add, color: Colors.white),
-            label: Text(
-              'Novo item',
-              style: TextStyle(color: Colors.white, fontSize: 16),
-            ),
-          ),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        appBar: PreferredSize(
-          preferredSize: Size(double.infinity, 80),
-          child: AppBar(
-            iconTheme: IconThemeData(color: Colors.white),
-            actions: [
-              IconButton(
-                onPressed: () => Get.bottomSheet(BottomSheetDeleteList()),
-                icon: Icon(Icons.delete, color: Colors.redAccent),
+    return Scaffold(
+      bottomNavigationBar: Obx(
+        () => Container(
+          height: 90,
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          decoration: BoxDecoration(
+            color: Colors.blue,
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withAlpha(10),
+                blurRadius: 10,
+                offset: const Offset(0, -2),
               ),
             ],
-            title: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  ShopListController.to.selectedShopList.name,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              /// 🛒 INFO
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Total da compra ( ${ProductController.to.products.length} itens )',
+                    style: Theme.of(
+                      context,
+                    ).textTheme.labelMedium?.copyWith(color: Colors.white70),
                   ),
-                ),
-              ],
-            ),
-            backgroundColor: Colors.blue,
+                  Text(
+                    ProductController.to.totalCompra,
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                ],
+              ),
+
+              /// 📦 INFO CARRINHO
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  // Text(
+                  //   '${ProductController.to.productIsCheck.length} de ${ProductController.to.products.length} itens',
+                  //   style: TextStyle(color: Colors.white70, fontSize: 12),
+                  // ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 6,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.15),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.shopping_cart,
+                          color: Theme.of(context).iconTheme.color,
+                        ),
+                        const SizedBox(width: 6),
+                        Text(
+                          ProductController.to.totalCart,
+                          style: Theme.of(context).textTheme.labelMedium,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
-        extendBodyBehindAppBar: true,
-        body: SafeArea(
-          child: ListDetail(),
-          // child: Padding(padding: const EdgeInsets.all(8.0), child: ListDetail()),
+      ),
+      floatingActionButton: SizedBox(
+        height: 60,
+        child: ElevatedButton.icon(
+          onPressed: () {
+            Get.bottomSheet(BottomSheetProduct()).whenComplete(() {
+              ProductController.to.cleanForm();
+            });
+          },
+          style: ButtonStyle(
+            backgroundColor: WidgetStatePropertyAll(
+              Theme.of(context).colorScheme.primary,
+            ),
+          ),
+          icon: Icon(Icons.add, color: Theme.of(context).iconTheme.color),
+          label: Text(
+            'Novo item',
+            style: Theme.of(context).textTheme.labelLarge,
+          ),
         ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      appBar: PreferredSize(
+        preferredSize: Size(double.infinity, 80),
+        child: AppBar(
+          iconTheme: Theme.of(context).iconTheme,
+          actions: [
+            IconButton(
+              onPressed: () => Get.bottomSheet(BottomSheetDeleteList()),
+              icon: Icon(Icons.delete, color: Colors.redAccent),
+            ),
+          ],
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                ShopListController.to.selectedShopList.name,
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+            ],
+          ),
+          backgroundColor: Theme.of(context).colorScheme.primary,
+        ),
+      ),
+      extendBodyBehindAppBar: true,
+      body: SafeArea(
+        child: ListDetail(),
+        // child: Padding(padding: const EdgeInsets.all(8.0), child: ListDetail()),
       ),
     );
   }
@@ -190,7 +183,7 @@ class ListDetail extends GetView<ProductController> {
                 ? 0
                 : controller.productIsCheck.length / controller.products.length,
             backgroundColor: Colors.white24,
-            valueColor: AlwaysStoppedAnimation(Colors.lightBlueAccent),
+            valueColor: AlwaysStoppedAnimation(MyTheme.lightBlueAccent),
           ),
         ),
 

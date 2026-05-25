@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shop_list/app/modules/shop_list/presenter/controllers/shop_list_controller.dart';
 import 'package:shop_list/app/routes/routes.dart';
+import 'package:shop_list/app/theme/my_theme.dart';
 
 class BottomSheetDeleteList extends GetView {
   const BottomSheetDeleteList({super.key});
@@ -19,15 +20,16 @@ class BottomSheetDeleteList extends GetView {
             children: [
               Text(
                 'Deseja remover lista:',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: MyTheme.title,
+                ),
               ),
               Text(
                 ShopListController.to.selectedShopList.name,
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.grey,
-                ),
+                style: Theme.of(
+                  context,
+                ).textTheme.titleSmall?.copyWith(color: MyTheme.subtitle),
               ),
               Expanded(
                 child: Row(
@@ -45,7 +47,10 @@ class BottomSheetDeleteList extends GetView {
                           width: 130,
                           decoration: BoxDecoration(
                             color: Colors.transparent,
-                            border: Border.all(color: Colors.grey, width: 1.0),
+                            border: Border.all(
+                              color: MyTheme.subtitle,
+                              width: 1.0,
+                            ),
                             borderRadius: const BorderRadius.all(
                               Radius.circular(32.0),
                             ),
@@ -55,11 +60,11 @@ class BottomSheetDeleteList extends GetView {
                             children: [
                               Text(
                                 'Cancelar'.tr,
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.grey,
-                                  fontWeight: FontWeight.w600,
-                                ),
+                                style: Theme.of(context).textTheme.labelLarge
+                                    ?.copyWith(
+                                      color: MyTheme.subtitle,
+                                      fontWeight: FontWeight.w600,
+                                    ),
                               ),
                             ],
                           ),
@@ -113,11 +118,12 @@ class BottomSheetDeleteList extends GetView {
                                     children: [
                                       Text(
                                         'Confimar'.tr,
-                                        style: const TextStyle(
-                                          fontSize: 16,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w600,
-                                        ),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelLarge
+                                            ?.copyWith(
+                                              fontWeight: FontWeight.w600,
+                                            ),
                                       ),
                                     ],
                                   ),

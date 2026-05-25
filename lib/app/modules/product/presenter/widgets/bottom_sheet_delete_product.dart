@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shop_list/app/modules/product/domain/entities/product_shop_entity.dart';
 import 'package:shop_list/app/modules/product/presenter/controllers/product_controller.dart';
+import 'package:shop_list/app/theme/my_theme.dart';
 
 class BottomSheetDeleteProduct extends GetView<ProductController> {
   const BottomSheetDeleteProduct({super.key, required this.product});
@@ -21,15 +22,15 @@ class BottomSheetDeleteProduct extends GetView<ProductController> {
             children: [
               Text(
                 'Deseja remover o produto:',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: Theme.of(
+                  context,
+                ).textTheme.titleMedium?.copyWith(color: MyTheme.title),
               ),
               Text(
                 product.name,
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.grey,
-                ),
+                style: Theme.of(
+                  context,
+                ).textTheme.titleMedium?.copyWith(color: MyTheme.subtitle),
               ),
               Expanded(
                 child: Row(
@@ -57,11 +58,11 @@ class BottomSheetDeleteProduct extends GetView<ProductController> {
                             children: [
                               Text(
                                 'Cancelar'.tr,
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.grey,
-                                  fontWeight: FontWeight.w600,
-                                ),
+                                style: Theme.of(context).textTheme.labelLarge
+                                    ?.copyWith(
+                                      color: MyTheme.subtitle,
+                                      fontWeight: FontWeight.w600,
+                                    ),
                               ),
                             ],
                           ),
@@ -112,11 +113,12 @@ class BottomSheetDeleteProduct extends GetView<ProductController> {
                                     children: [
                                       Text(
                                         'Confimar'.tr,
-                                        style: const TextStyle(
-                                          fontSize: 16,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w600,
-                                        ),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelLarge
+                                            ?.copyWith(
+                                              fontWeight: FontWeight.w600,
+                                            ),
                                       ),
                                     ],
                                   ),

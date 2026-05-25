@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 class MyTheme {
   static const primary = Colors.blue;
   static const primaryDark = Colors.blueAccent;
+  static const lightBlueAccent = Colors.lightBlueAccent;
+
+  static const title = Colors.black;
+  static const subtitle = Colors.grey;
 
   /// 🌞 LIGHT
   static final light = ThemeData(
@@ -34,7 +38,37 @@ class MyTheme {
 
     cardColor: Colors.white,
 
-    textTheme: const TextTheme(bodyMedium: TextStyle(color: Colors.black87)),
+    iconTheme: IconThemeData(color: Colors.white),
+
+    textTheme: TextTheme(
+      titleLarge: TextStyle(
+        fontSize: 24,
+        fontWeight: FontWeight.w600,
+        color: Colors.white,
+      ),
+
+      titleMedium: TextStyle(
+        color: Colors.white,
+        fontSize: 20,
+        fontWeight: FontWeight.w600,
+      ),
+
+      titleSmall: TextStyle(
+        color: Colors.white,
+        fontSize: 18,
+        fontWeight: FontWeight.w600,
+      ),
+
+      labelLarge: TextStyle(color: Colors.white, fontSize: 16),
+
+      labelMedium: TextStyle(
+        color: Colors.white,
+        fontSize: 14,
+        fontWeight: FontWeight.w600,
+      ),
+
+      bodyMedium: TextStyle(color: Colors.black87),
+    ),
   );
 
   /// 🌙 DARK

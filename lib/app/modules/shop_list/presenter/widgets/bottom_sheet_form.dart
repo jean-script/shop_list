@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shop_list/app/modules/shop_list/domain/entities/shop_list_entity.dart';
 import 'package:shop_list/app/modules/shop_list/presenter/controllers/shop_list_controller.dart';
+import 'package:shop_list/app/theme/my_theme.dart';
 import 'package:shop_list/app/theme/theme_controller.dart';
 
 class BottomSheetForm extends GetView<ShopListController> {
@@ -13,7 +14,7 @@ class BottomSheetForm extends GetView<ShopListController> {
 
   @override
   Widget build(BuildContext context) {
-    final _formKey = GlobalKey<FormState>();
+    final formKey = GlobalKey<FormState>();
     if (isEdit) {
       controller.nameController.text = shopList!.name;
     }
@@ -27,14 +28,16 @@ class BottomSheetForm extends GetView<ShopListController> {
           height: 250,
           width: double.infinity,
           child: Form(
-            key: _formKey,
+            key: formKey,
             child: Column(
               spacing: 12.0,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   'Informe o nome da lista',
-                  style: Theme.of(context).textTheme.titleMedium,
+                  style: Theme.of(
+                    context,
+                  ).textTheme.titleMedium?.copyWith(color: MyTheme.title),
                 ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -49,13 +52,10 @@ class BottomSheetForm extends GetView<ShopListController> {
                       },
 
                       controller: controller.nameController,
-                      style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
+                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
                         color: ThemeController.to.isDark
                             ? Colors.white
                             : const Color(0xFF1A1A1A),
-                        // fontFamily: MyTheme.fontFamily,
                       ),
                       textAlign: TextAlign.center,
                       maxLength: 32,
@@ -77,11 +77,11 @@ class BottomSheetForm extends GetView<ShopListController> {
                           vertical: 16,
                         ),
                         hintText: 'Ex: Compras do mês',
-                        hintStyle: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w500,
-                          color: Color(0xFFC1C7CA),
-                        ),
+                        hintStyle: Theme.of(context).textTheme.titleSmall
+                            ?.copyWith(
+                              fontWeight: FontWeight.w500,
+                              color: Color(0xFFC1C7CA),
+                            ),
                         errorBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(16),
                           borderSide: const BorderSide(
@@ -123,7 +123,7 @@ class BottomSheetForm extends GetView<ShopListController> {
                   (isLoading) => InkWell(
                     borderRadius: const BorderRadius.all(Radius.circular(32.0)),
                     onTap: () async {
-                      if (!_formKey.currentState!.validate() ||
+                      if (!formKey.currentState!.validate() ||
                           isLoading.isTrue) {
                         return;
                       }
@@ -176,11 +176,8 @@ class BottomSheetForm extends GetView<ShopListController> {
                               children: [
                                 Text(
                                   'Criar'.tr,
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w600,
-                                  ),
+                                  style: Theme.of(context).textTheme.labelLarge
+                                      ?.copyWith(fontWeight: FontWeight.w600),
                                 ),
                               ],
                             ),

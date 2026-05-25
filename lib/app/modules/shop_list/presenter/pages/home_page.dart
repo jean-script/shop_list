@@ -4,6 +4,7 @@ import 'package:shop_list/app/components/my_scaffold.dart';
 import 'package:shop_list/app/modules/shop_list/presenter/controllers/shop_list_controller.dart';
 import 'package:shop_list/app/modules/shop_list/presenter/widgets/bottom_sheet_form.dart';
 import 'package:shop_list/app/routes/routes.dart';
+import 'package:shop_list/app/theme/my_theme.dart';
 
 class HomePage extends GetView<ShopListController> {
   const HomePage({super.key});
@@ -21,6 +22,7 @@ class HomePage extends GetView<ShopListController> {
               Text(
                 'Suas listas',
                 style: theme.textTheme.titleMedium?.copyWith(
+                  color: MyTheme.title,
                   fontWeight: FontWeight.w600,
                 ),
               ),

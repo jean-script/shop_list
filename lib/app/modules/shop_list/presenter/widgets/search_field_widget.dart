@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
 import 'package:shop_list/app/modules/product/presenter/controllers/product_controller.dart';
+import 'package:shop_list/app/theme/my_theme.dart';
 import 'package:shop_list/app/theme/theme_controller.dart';
 
 class SearchFieldWidget extends GetView<ProductController> {
@@ -20,14 +21,9 @@ class SearchFieldWidget extends GetView<ProductController> {
         //   return null;
         // },
         // controller: controller.searchController,
-        style: Theme.of(context).textTheme.labelSmall?.copyWith(
-          fontSize: 14,
-          fontWeight: FontWeight.w600,
-          color: ThemeController.to.isDark
-              ? Colors.white
-              : const Color(0xFF1A1A1A),
-          // fontFamily: MyTheme.fontFamily,
-        ),
+        style: Theme.of(
+          context,
+        ).textTheme.labelMedium?.copyWith(color: MyTheme.title),
         textAlign: TextAlign.start,
         maxLength: 32,
         onChanged: (value) => controller.search.value = value,
@@ -45,8 +41,7 @@ class SearchFieldWidget extends GetView<ProductController> {
           ),
           prefixIcon: Icon(Icons.search_rounded, color: Colors.black26),
           hintText: 'Buscar produtos',
-          hintStyle: const TextStyle(
-            fontSize: 14,
+          hintStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
             fontWeight: FontWeight.w500,
             color: Color(0xFFC1C7CA),
           ),

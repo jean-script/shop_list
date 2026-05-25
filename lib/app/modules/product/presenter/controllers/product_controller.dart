@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:get/get.dart';
+import 'package:shop_list/app/Utils/app_logger.dart';
 import 'package:shop_list/app/Utils/format_currency.dart';
 import 'package:shop_list/app/extensions/double_extension.dart';
 import 'package:shop_list/app/extensions/list_extension.dart';
@@ -120,16 +121,16 @@ class ProductController extends GetxController
   }
 
   Future<List<ProductShopDTO>> getProducByListIdS(String listId) async {
-    log('getProducByListIdS -> listId: $listId');
+    AppLogger.log('getProducByListIdS -> listId: $listId');
     final result = await _getProductsByListIdUsecase(listId);
 
     return result.fold(
       (fail) {
-        log('getProducByListIdS -> falha devolvendo lista vazia');
+        AppLogger.log('getProducByListIdS -> falha devolvendo lista vazia');
         return [];
       },
       (list) {
-        log('getProducByListIdS -> sucesso');
+        AppLogger.log('getProducByListIdS -> sucesso');
         return list;
       },
     );
@@ -140,10 +141,10 @@ class ProductController extends GetxController
 
     result.fold(
       (fail) {
-        log('getAllCategory -> falha devolvendo lista vazia');
+        AppLogger.log('getAllCategory -> falha devolvendo lista vazia');
       },
       (cgs) {
-        log('getAllCategory -> sucesso');
+        AppLogger.log('getAllCategory -> sucesso');
         categorys.value = cgs;
 
         selectedCategoryId.value = cgs.first.id;
@@ -156,10 +157,10 @@ class ProductController extends GetxController
 
     result.fold(
       (fail) {
-        log('getAllProducts -> falha devolvendo lista vazia');
+        AppLogger.log('getAllProducts -> falha devolvendo lista vazia');
       },
       (prds) {
-        log('getAllProducts -> sucesso');
+        AppLogger.log('getAllProducts -> sucesso');
         allproducts.value = prds;
       },
     );
@@ -252,7 +253,7 @@ class ProductController extends GetxController
 
     result.fold(
       (fail) {
-        log('ERROR AO EDITAR ITEM');
+        AppLogger.log('ERROR AO EDITAR ITEM');
       },
       (sucess) {
         if (Get.isBottomSheetOpen ?? false) {
