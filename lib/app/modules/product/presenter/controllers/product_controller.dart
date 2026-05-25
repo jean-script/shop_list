@@ -62,6 +62,14 @@ class ProductController extends GetxController
     super.onInit();
   }
 
+  @override
+  void onClose() {
+    nameController.dispose();
+    amountController.dispose();
+    priceController.dispose();
+    super.onClose();
+  }
+
   Future<void> clean() async {
     products.clear();
   }
