@@ -1,19 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_instance/get_instance.dart';
 import 'package:get/state_manager.dart';
 import 'package:shop_list/app/modules/product/presenter/controllers/product_controller.dart';
 import 'package:shop_list/app/theme/my_theme.dart';
 import 'package:shop_list/app/theme/theme_controller.dart';
 
-class SearchFieldWidget extends GetView<ProductController> {
+class SearchFieldWidget extends StatefulWidget {
   const SearchFieldWidget({super.key});
+
+  @override
+  State<SearchFieldWidget> createState() => _SearchFieldWidgetState();
+}
+
+class _SearchFieldWidgetState extends State<SearchFieldWidget> {
+  final controller = Get.find<ProductController>();
+  final FocusNode _focusNode = FocusNode();
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(8.0),
       child: TextField(
+        focusNode: _focusNode,
         autofocus: false,
-
         // validator: (value) {
         //   if (value == null || value.trim().isEmpty) {
         //     return 'O Campo nome não pode ser vazio!';

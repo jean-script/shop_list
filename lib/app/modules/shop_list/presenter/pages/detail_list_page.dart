@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:shop_list/app/components/my_shimmer.dart';
 import 'package:shop_list/app/extensions/double_extension.dart';
 import 'package:shop_list/app/modules/product/domain/entities/product_shop_entity.dart';
 import 'package:shop_list/app/modules/product/presenter/controllers/product_controller.dart';
@@ -35,76 +36,80 @@ class _DetailListPageState extends State<DetailListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: Obx(
-        () => Container(
-          height: 90,
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          decoration: BoxDecoration(
-            color: Colors.blue,
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withAlpha(10),
-                blurRadius: 10,
-                offset: const Offset(0, -2),
+      bottomNavigationBar: SafeArea(
+        child: Obx(
+          () => Container(
+            height: 90,
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            decoration: BoxDecoration(
+              color: Theme.of(context).primaryColor,
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(16),
               ),
-            ],
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              /// 🛒 INFO
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Total da compra ( ${ProductController.to.products.length} itens )',
-                    style: Theme.of(
-                      context,
-                    ).textTheme.labelMedium?.copyWith(color: Colors.white70),
-                  ),
-                  Text(
-                    ProductController.to.totalCompra,
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                ],
-              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withAlpha(10),
+                  blurRadius: 10,
+                  offset: const Offset(0, -2),
+                ),
+              ],
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                /// 🛒 INFO
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Total da compra ( ${ProductController.to.products.length} itens )',
+                      style: Theme.of(
+                        context,
+                      ).textTheme.labelMedium?.copyWith(color: Colors.white70),
+                    ),
+                    Text(
+                      ProductController.to.totalCompra,
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                  ],
+                ),
 
-              /// 📦 INFO CARRINHO
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  // Text(
-                  //   '${ProductController.to.productIsCheck.length} de ${ProductController.to.products.length} itens',
-                  //   style: TextStyle(color: Colors.white70, fontSize: 12),
-                  // ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 6,
+                /// 📦 INFO CARRINHO
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    // Text(
+                    //   '${ProductController.to.productIsCheck.length} de ${ProductController.to.products.length} itens',
+                    //   style: TextStyle(color: Colors.white70, fontSize: 12),
+                    // ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 6,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.15),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.shopping_cart,
+                            color: Theme.of(context).iconTheme.color,
+                          ),
+                          const SizedBox(width: 6),
+                          Text(
+                            ProductController.to.totalCart,
+                            style: Theme.of(context).textTheme.labelMedium,
+                          ),
+                        ],
+                      ),
                     ),
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.15),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.shopping_cart,
-                          color: Theme.of(context).iconTheme.color,
-                        ),
-                        const SizedBox(width: 6),
-                        Text(
-                          ProductController.to.totalCart,
-                          style: Theme.of(context).textTheme.labelMedium,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -112,8 +117,13 @@ class _DetailListPageState extends State<DetailListPage> {
         height: 60,
         child: ElevatedButton.icon(
           onPressed: () {
-            Get.bottomSheet(BottomSheetProduct()).whenComplete(() {
+            FocusManager.instance.primaryFocus?.unfocus();
+            Get.bottomSheet(
+              BottomSheetProduct(),
+              isScrollControlled: true,
+            ).whenComplete(() {
               ProductController.to.cleanForm();
+              FocusManager.instance.primaryFocus?.unfocus();
             });
           },
           style: ButtonStyle(
@@ -175,6 +185,7 @@ class ListDetail extends GetView<ProductController> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(Get.context!);
     return Column(
       children: [
         Obx(
@@ -218,7 +229,7 @@ class ListDetail extends GetView<ProductController> {
                                   controller.selectedCategoryIdFilter.value ==
                                       'all'
                                   ? Colors.blue
-                                  : Colors.grey.shade200,
+                                  : theme.cardColor,
                               borderRadius: BorderRadius.circular(20),
                             ),
                             alignment: Alignment.center,
@@ -258,7 +269,7 @@ class ListDetail extends GetView<ProductController> {
                           decoration: BoxDecoration(
                             color: isSelected
                                 ? Color(category.color)
-                                : Colors.grey.shade200,
+                                : theme.cardColor,
                             borderRadius: BorderRadius.circular(20),
                           ),
                           alignment: Alignment.center,
@@ -376,18 +387,32 @@ class ListDetail extends GetView<ProductController> {
           },
 
           /// LOADING
-          onLoading: const Center(child: CircularProgressIndicator()),
+          onLoading: Expanded(
+            child: Padding(
+              padding: EdgeInsets.only(top: 10, left: 10, right: 10),
+              child: Column(
+                spacing: 12.0,
+                children: List.generate(5, (index) => MyShimmer()),
+              ),
+            ),
+          ),
 
           /// EMPTY
           onEmpty: Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.shopping_cart, size: 100),
+                Icon(
+                  Icons.shopping_cart,
+                  size: 100,
+                  color: Theme.of(context).primaryColor,
+                ),
                 const SizedBox(height: 8),
                 Text(
                   'Você ainda não tem itens na lista',
-                  style: Theme.of(context).textTheme.titleMedium,
+                  style: Theme.of(
+                    context,
+                  ).textTheme.titleMedium?.copyWith(color: MyTheme.title),
                 ),
               ],
             ),
@@ -398,6 +423,7 @@ class ListDetail extends GetView<ProductController> {
   }
 
   Widget _buildItem(ProductShopDTO product) {
+    final theme = Theme.of(Get.context!);
     return InkWell(
       key: ValueKey(product.id),
       onTap: () {
@@ -413,9 +439,10 @@ class ListDetail extends GetView<ProductController> {
           padding: const EdgeInsets.all(8.0),
           constraints: const BoxConstraints(minHeight: 70),
           decoration: BoxDecoration(
-            color: product.isChecked
-                ? Colors.grey.shade100
-                : Colors.grey.shade200,
+            color: product.isChecked ? Colors.grey.shade200 : theme.cardColor,
+            // product.isChecked
+            //     ? Colors.grey.shade100
+            //     : Colors.grey.shade200,
             borderRadius: BorderRadius.circular(10),
           ),
           child: Row(

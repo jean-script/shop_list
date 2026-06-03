@@ -53,263 +53,264 @@ class _BottomSheetProductState extends State<BottomSheetProduct> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: BottomSheet(
-        onClosing: () {},
-
-        builder: (context) => Container(
-          padding: EdgeInsets.all(15.0),
-          // height: 440,
-          constraints: BoxConstraints(
-            maxHeight: MediaQuery.of(context).size.height * 0.85,
+      child: Container(
+        padding: EdgeInsets.all(15.0),
+        // height: 440,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(8),
+            topRight: Radius.circular(8),
           ),
-          width: double.infinity,
-          child: SingleChildScrollView(
-            controller: scrollController,
-            child: Form(
-              key: formKey,
-              child: Column(
-                spacing: 15.0,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Padding(
-                    key: checkpointInitial,
-                    padding: const EdgeInsets.only(left: 5.0),
-                    child: Text(
-                      isEdit ? ' Editar Item' : 'Registrar Item',
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.w600,
-                        color: MyTheme.title,
-                      ),
+        ),
+        constraints: BoxConstraints(
+          maxHeight: MediaQuery.of(context).size.height * 0.85,
+        ),
+        width: double.infinity,
+        child: SingleChildScrollView(
+          controller: scrollController,
+          child: Form(
+            key: formKey,
+            child: Column(
+              spacing: 15.0,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  key: checkpointInitial,
+                  padding: const EdgeInsets.only(left: 5.0),
+                  child: Text(
+                    isEdit ? ' Editar Item' : 'Registrar Item',
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.w600,
+                      color: MyTheme.title,
                     ),
                   ),
+                ),
 
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 5.0),
-                        child: Text(
-                          'Categoria',
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 5.0),
+                      child: Text(
+                        'Categoria',
+                        style: Theme.of(
+                          context,
+                        ).textTheme.titleMedium?.copyWith(color: MyTheme.title),
                       ),
-                      const SizedBox(height: 8),
-                      SizedBox(
-                        height: 50,
-                        child: ListView.separated(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: controller.categorys.length,
-                          separatorBuilder: (_, __) => const SizedBox(width: 8),
-                          itemBuilder: (_, index) {
-                            final category = controller.categorys[index];
-                            // final isSelected =
-                            //     controller.selectedCategoryId.value ==
-                            //     category.id;
+                    ),
+                    const SizedBox(height: 8),
+                    SizedBox(
+                      height: 50,
+                      child: ListView.separated(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: controller.categorys.length,
+                        separatorBuilder: (_, __) => const SizedBox(width: 8),
+                        itemBuilder: (_, index) {
+                          final category = controller.categorys[index];
+                          // final isSelected =
+                          //     controller.selectedCategoryId.value ==
+                          //     category.id;
 
-                            return Obx(
-                              () => GestureDetector(
-                                onTap: () {
-                                  controller.selectedCategoryId.value =
-                                      category.id;
-                                },
-                                child: AnimatedContainer(
-                                  duration: const Duration(milliseconds: 200),
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 14,
-                                  ),
-                                  decoration: BoxDecoration(
+                          return Obx(
+                            () => GestureDetector(
+                              onTap: () {
+                                controller.selectedCategoryId.value =
+                                    category.id;
+                              },
+                              child: AnimatedContainer(
+                                duration: const Duration(milliseconds: 200),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 14,
+                                ),
+                                decoration: BoxDecoration(
+                                  color:
+                                      controller.selectedCategoryId.value ==
+                                          category.id
+                                      ? Color(category.color)
+                                      : Colors.grey.shade200,
+                                  borderRadius: BorderRadius.circular(20),
+                                  border: Border.all(
                                     color:
                                         controller.selectedCategoryId.value ==
                                             category.id
                                         ? Color(category.color)
-                                        : Colors.grey.shade200,
-                                    borderRadius: BorderRadius.circular(20),
-                                    border: Border.all(
-                                      color:
-                                          controller.selectedCategoryId.value ==
-                                              category.id
-                                          ? Color(category.color)
-                                          : Colors.transparent,
-                                    ),
+                                        : Colors.transparent,
                                   ),
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    category.name,
-                                    style: TextStyle(
-                                      color:
-                                          controller.selectedCategoryId.value ==
-                                              category.id
-                                          ? Colors.white
-                                          : Colors.black87,
-                                      fontWeight: FontWeight.w500,
-                                    ),
+                                ),
+                                alignment: Alignment.center,
+                                child: Text(
+                                  category.name,
+                                  style: TextStyle(
+                                    color:
+                                        controller.selectedCategoryId.value ==
+                                            category.id
+                                        ? Colors.white
+                                        : Colors.black87,
+                                    fontWeight: FontWeight.w500,
                                   ),
                                 ),
                               ),
-                            );
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    spacing: 12.0,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      MyTextFormField(
-                        controller: controller.nameController,
-                        title: 'Informe o nome do produto',
-                        label: 'Nome',
-                        hintText: 'Arroz Camil',
-                        inputType: TextInputType.name,
-                        onChanged: controller.onSearchChanged,
-                      ),
-                      Obx(() {
-                        if (controller.suggestions.isEmpty) return SizedBox();
-
-                        return Container(
-                          margin: const EdgeInsets.only(top: 8),
-                          padding: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(12),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.05),
-                                blurRadius: 6,
-                              ),
-                            ],
-                          ),
-                          child: Column(
-                            children: controller.suggestions.map((item) {
-                              return ListTile(
-                                dense: true,
-                                title: Text(item.name),
-                                subtitle: Text(
-                                  '${item.amount} itens • R\$ ${item.price.toStringAsFixed(2)}',
-                                ),
-                                onTap: () {
-                                  /// 🔥 auto preencher
-                                  controller.nameController.text = item.name;
-                                  controller.amountController.text = item.amount
-                                      .toString();
-                                  // controller.priceController.text = item.price
-                                  //     .toString();
-                                  // formatCurrency
-
-                                  controller.selectedCategoryId.value =
-                                      item.categoryId ?? 'outros';
-
-                                  controller.suggestions.clear();
-                                },
-                              );
-                            }).toList(),
-                          ),
-                        );
-                      }),
-                      MyTextFormField(
-                        title: 'Informe a quantidade',
-                        controller: controller.amountController,
-                        label: 'Quantidade',
-                        hintText: 'Ex: 2',
-                        inputType: TextInputType.number,
-                      ),
-                      MyTextFormField(
-                        title: 'Informe o preço',
-                        controller: controller.priceController,
-                        label: 'Preço',
-                        hintText: 'R\$ 30.00',
-                        inputFormatters: [CurrencyInputFormatter()],
-                        isRequired: false,
-                        inputType: TextInputType.number,
-                        onTap: () {
-                          _scrollToWidget(checkpointButtonAdd.currentContext);
+                            ),
+                          );
                         },
                       ),
-                    ],
-                  ),
-
-                  ObxValue(
-                    (isLoading) => InkWell(
-                      key: checkpointButtonAdd,
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(32.0),
-                      ),
-                      onTap: (isLoading.isTrue)
-                          ? null
-                          : () async {
-                              if (!formKey.currentState!.validate()) {
-                                return;
-                              }
-                              isLoading.value = true;
-                              if (isEdit) {
-                                controller.edit(
-                                  widget.product!.copyWith(
-                                    amount:
-                                        int.tryParse(
-                                          controller.amountController.text,
-                                        ) ??
-                                        0,
-                                    name: controller.nameController.text,
-                                    price: ProductController.to.parseCurrency(
-                                      controller.priceController.text,
-                                    ),
-                                    categoryId:
-                                        controller.selectedCategoryId.value,
-                                  ),
-                                );
-                              } else {
-                                await controller.create();
-                              }
-                              isLoading.value = false;
-                              _scrollToWidget(checkpointInitial.currentContext);
-                            },
-                      child: Container(
-                        height: 64,
-                        decoration: BoxDecoration(
-                          color: const Color(0xff0069B1),
-                          border: Border.all(
-                            color: const Color(0xff0069B1),
-                            width: 1.0,
-                          ),
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(32.0),
-                          ),
-                        ),
-                        child: isLoading.isTrue
-                            ? ConstrainedBox(
-                                constraints: const BoxConstraints(
-                                  maxHeight: 24,
-                                  maxWidth: 24,
-                                ),
-                                child: const Center(
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 2,
-                                    valueColor: AlwaysStoppedAnimation<Color>(
-                                      Colors.white,
-                                    ),
-                                  ),
-                                ),
-                              )
-                            : Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'Adicionar'.tr,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .labelLarge
-                                        ?.copyWith(fontWeight: FontWeight.w600),
-                                  ),
-                                ],
-                              ),
-                      ),
                     ),
-                    false.obs,
+                  ],
+                ),
+                Column(
+                  spacing: 12.0,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    MyTextFormField(
+                      controller: controller.nameController,
+                      title: 'Informe o nome do produto',
+                      label: 'Nome',
+                      hintText: 'Arroz Camil',
+                      inputType: TextInputType.name,
+                      onChanged: controller.onSearchChanged,
+                    ),
+                    Obx(() {
+                      if (controller.suggestions.isEmpty) return SizedBox();
+
+                      return Container(
+                        margin: const EdgeInsets.only(top: 8),
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(12),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.05),
+                              blurRadius: 6,
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          children: controller.suggestions.map((item) {
+                            return ListTile(
+                              dense: true,
+                              title: Text(item.name),
+                              subtitle: Text(
+                                '${item.amount} itens • R\$ ${item.price.toStringAsFixed(2)}',
+                              ),
+                              onTap: () {
+                                /// 🔥 auto preencher
+                                controller.nameController.text = item.name;
+                                controller.amountController.text = item.amount
+                                    .toString();
+                                // controller.priceController.text = item.price
+                                //     .toString();
+                                // formatCurrency
+
+                                controller.selectedCategoryId.value =
+                                    item.categoryId ?? 'outros';
+
+                                controller.suggestions.clear();
+                              },
+                            );
+                          }).toList(),
+                        ),
+                      );
+                    }),
+                    MyTextFormField(
+                      title: 'Informe a quantidade',
+                      controller: controller.amountController,
+                      label: 'Quantidade',
+                      hintText: 'Ex: 2',
+                      inputType: TextInputType.number,
+                    ),
+                    MyTextFormField(
+                      title: 'Informe o preço',
+                      controller: controller.priceController,
+                      label: 'Preço',
+                      hintText: 'R\$ 30.00',
+                      inputFormatters: [CurrencyInputFormatter()],
+                      isRequired: false,
+                      inputType: TextInputType.number,
+                      onTap: () {
+                        _scrollToWidget(checkpointButtonAdd.currentContext);
+                      },
+                    ),
+                  ],
+                ),
+
+                ObxValue(
+                  (isLoading) => InkWell(
+                    key: checkpointButtonAdd,
+                    borderRadius: const BorderRadius.all(Radius.circular(32.0)),
+                    onTap: (isLoading.isTrue)
+                        ? null
+                        : () async {
+                            if (!formKey.currentState!.validate()) {
+                              return;
+                            }
+                            isLoading.value = true;
+                            if (isEdit) {
+                              controller.edit(
+                                widget.product!.copyWith(
+                                  amount:
+                                      int.tryParse(
+                                        controller.amountController.text,
+                                      ) ??
+                                      0,
+                                  name: controller.nameController.text,
+                                  price: ProductController.to.parseCurrency(
+                                    controller.priceController.text,
+                                  ),
+                                  categoryId:
+                                      controller.selectedCategoryId.value,
+                                ),
+                              );
+                            } else {
+                              await controller.create();
+                            }
+                            isLoading.value = false;
+                            _scrollToWidget(checkpointInitial.currentContext);
+                          },
+                    child: Container(
+                      height: 64,
+                      decoration: BoxDecoration(
+                        color: const Color(0xff0069B1),
+                        border: Border.all(
+                          color: const Color(0xff0069B1),
+                          width: 1.0,
+                        ),
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(32.0),
+                        ),
+                      ),
+                      child: isLoading.isTrue
+                          ? ConstrainedBox(
+                              constraints: const BoxConstraints(
+                                maxHeight: 24,
+                                maxWidth: 24,
+                              ),
+                              child: const Center(
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                    Colors.white,
+                                  ),
+                                ),
+                              ),
+                            )
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Adicionar'.tr,
+                                  style: Theme.of(context).textTheme.labelLarge
+                                      ?.copyWith(fontWeight: FontWeight.w600),
+                                ),
+                              ],
+                            ),
+                    ),
                   ),
-                ],
-              ),
+                  false.obs,
+                ),
+              ],
             ),
           ),
         ),

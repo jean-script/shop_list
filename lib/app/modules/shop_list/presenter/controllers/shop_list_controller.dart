@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:get/get.dart';
@@ -61,7 +59,7 @@ class ShopListController extends GetxController
       },
       (newShopList) async {
         shopList = newShopList;
-        await Future.delayed(Duration(seconds: 1));
+        // await Future.delayed(Duration(seconds: 3));
 
         AppLogger.log('getShopList -> sucesso');
 

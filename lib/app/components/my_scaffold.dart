@@ -46,21 +46,23 @@ class MyScaffold extends StatelessWidget {
         child: Padding(padding: const EdgeInsets.all(20.0), child: child),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: SizedBox(
-        height: 60,
-        child: ElevatedButton.icon(
-          onPressed: () {
-            Get.bottomSheet(BottomSheetForm());
-          },
-          style: ButtonStyle(
-            backgroundColor: WidgetStatePropertyAll(
-              Theme.of(context).colorScheme.primary,
+      floatingActionButton: SafeArea(
+        child: SizedBox(
+          height: 60,
+          child: ElevatedButton.icon(
+            onPressed: () {
+              Get.bottomSheet(BottomSheetForm());
+            },
+            style: ButtonStyle(
+              backgroundColor: WidgetStatePropertyAll(
+                Theme.of(context).colorScheme.primary,
+              ),
             ),
-          ),
-          icon: Icon(Icons.add, color: Theme.of(context).iconTheme.color),
-          label: Text(
-            'Nova Lista',
-            style: Theme.of(context).textTheme.labelMedium,
+            icon: Icon(Icons.add, color: Theme.of(context).iconTheme.color),
+            label: Text(
+              'Nova Lista',
+              style: Theme.of(context).textTheme.labelMedium,
+            ),
           ),
         ),
       ),

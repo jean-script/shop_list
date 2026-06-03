@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:get/get.dart';
@@ -104,6 +102,8 @@ class ProductController extends GetxController
   Future<void> getProducByListId(String listId) async {
     change(null, status: RxStatus.loading());
     final result = await _getProductsByListIdUsecase(listId);
+
+    // await Future.delayed(Duration(seconds: 3));
 
     result.fold(
       (fail) {
