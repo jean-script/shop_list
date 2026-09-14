@@ -12,11 +12,10 @@ class SearchTextfield extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        // color: colorScheme.surface,
         borderRadius: BorderRadius.circular(14),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
+            color: Colors.black.withValues(alpha: 0.04),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -24,35 +23,32 @@ class SearchTextfield extends StatelessWidget {
       ),
       child: TextFormField(
         controller: textController,
-        style: theme.textTheme.bodyLarge?.copyWith(fontSize: 16),
+        style: theme.textTheme.bodyMedium?.copyWith(fontSize: 14),
         decoration: InputDecoration(
           hintText: 'Buscar lista, item ou mercado...',
-
-          hintStyle: theme.textTheme.bodyLarge?.copyWith(
+          hintStyle: theme.textTheme.bodyMedium?.copyWith(
             color: theme.textTheme.bodySmall?.color,
-            fontSize: 16,
+            fontSize: 14,
           ),
 
           prefixIcon: Icon(
             Icons.search_outlined,
-            size: 28,
+            size: 23,
             color: colorScheme.primary,
           ),
 
           suffixIcon: IconButton(
-            onPressed: () {
-              // TODO: abrir leitor de código de barras
-            },
-            icon: const Icon(Icons.barcode_reader, size: 26),
+            onPressed: () {},
+            icon: const Icon(Icons.barcode_reader, size: 23),
             color: colorScheme.primary,
           ),
 
           filled: true,
-          // fillColor: colorScheme.surface,
+          fillColor: Colors.white,
 
           contentPadding: const EdgeInsets.symmetric(
-            horizontal: 16,
-            vertical: 18,
+            horizontal: 12,
+            vertical: 15,
           ),
 
           border: OutlineInputBorder(

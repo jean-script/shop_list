@@ -6,45 +6,59 @@ class AppbarContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 14),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Row(
-            spacing: 8.0,
+            spacing: 10,
             children: [
               Container(
-                height: 45,
-                width: 45,
-                padding: const EdgeInsets.all(8),
+                height: 42,
+                width: 42,
+                padding: const EdgeInsets.all(7),
                 decoration: BoxDecoration(
-                  color: Theme.of(
-                    context,
-                  ).colorScheme.primary.withValues(alpha: 0.04),
-                  borderRadius: BorderRadius.circular(17),
+                  color: theme.colorScheme.primary.withValues(alpha: 0.06),
+                  borderRadius: BorderRadius.circular(14),
                 ),
                 child: Image.asset('assets/imgs/logo.png', fit: BoxFit.contain),
               ),
 
-              Text(
-                'ListaFacil',
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  fontWeight: FontWeight.w500,
-                  color: MyTheme.title,
-                ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'ListaFácil',
+                    style: theme.textTheme.bodyLarge?.copyWith(
+                      fontWeight: FontWeight.w600,
+                      color: MyTheme.title,
+                    ),
+                  ),
+                  Text(
+                    'Olá, Ana',
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      fontSize: 11,
+                      color: MyTheme.subtitle,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
 
           Container(
-            height: 35,
-            width: 35,
+            height: 36,
+            width: 36,
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(60),
+              shape: BoxShape.circle,
+              border: Border.all(color: Colors.grey.withValues(alpha: 0.15)),
             ),
-            child: Icon(Icons.person, size: 25),
+            child: const Icon(Icons.person_outline, size: 21),
           ),
         ],
       ),

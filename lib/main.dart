@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:intl/intl.dart';
 import 'package:shop_list/app/Utils/app_logger.dart';
+import 'package:shop_list/app/bindings/initial_bindings.dart';
 import 'package:shop_list/app/routes/app_routes.dart';
 import 'package:shop_list/app/theme/my_theme.dart';
 import 'package:shop_list/app/theme/theme_controller.dart';
@@ -20,10 +21,11 @@ void main() async {
   };
 
   Intl.defaultLocale = 'pt_BR';
-  
+
   await Hive.initFlutter();
 
   await Hive.openBox<dynamic>('settings');
+
   Get.put(ThemeController(), permanent: true);
 
   runApp(
@@ -47,6 +49,7 @@ class MyApp extends StatelessWidget {
       theme: MyTheme.light,
       darkTheme: MyTheme.dark,
       themeMode: ThemeController.to.themeMode,
+      initialBinding: InitialBindings(),
     );
   }
 }
